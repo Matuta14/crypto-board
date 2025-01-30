@@ -12,10 +12,10 @@ import {
 import { IAssetHistoryResponse } from '../../requests/assets/types';
 import { Select } from '../../shared-components/select/select';
 import { ChartIntervalOptions, ChartPeriodType } from './constants';
+import Loader from '../../shared-components/loader/loader';
 
 export const ChartPage = () => {
   const selectedCoin = localStorage.getItem('selectedCoin') || '';
-  console.log('selectedCoin: ', selectedCoin);
   const [interval, setInterval] = useState<IntervalEnum>(IntervalEnum.oneHour);
   //TODO: make period type
   const [period, setPeriod] = useState<ChartPeriodType>(ChartPeriodType.oneDay);
@@ -27,7 +27,8 @@ export const ChartPage = () => {
 
   const startTime = getEndDateTimestamp(endTime.getTime(), period);
 
-  const { data } = useAssetHistory({
+  // TODO: add erors EVERYWHERE
+  const { data, isLoading } = useAssetHistory({
     id: selectedCoin,
     interval: interval,
     start: String(startTime),
@@ -41,17 +42,24 @@ export const ChartPage = () => {
 
   return (
     <ChartPageStyled>
-      <Select
-        options={ChartIntervalOptions}
-        onChange={(op: ChartPeriodType) => setPeriod(op)}
-        label='Choose Period'
-      />
-      <ChartBox>
-        <CoinPriceChart
-          priceData={ChartConvertedData.assetData}
-          timeData={ChartConvertedData.timeData}
-        />
-      </ChartBox>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className='content-box'>
+          <Select
+            options={ChartIntervalOptions}
+            onChange={(op: ChartPeriodType) => setPeriod(op)}
+            label='Choose Period'
+            className='select'
+          />
+          <ChartBox>
+            <CoinPriceChart
+              priceData={ChartConvertedData.assetData}
+              timeData={ChartConvertedData.timeData}
+            />
+          </ChartBox>
+        </div>
+      )}
     </ChartPageStyled>
   );
 };

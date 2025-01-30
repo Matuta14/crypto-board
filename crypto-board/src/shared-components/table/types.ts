@@ -10,7 +10,8 @@ export interface TableProps<T> {
 export interface IColumn<T> {
   label: string;
   flex?: number;
-  right?: boolean;
+  align?: 'right' | 'left';
   customRender?: boolean;
+  tooltip?: boolean;
   value: keyof T;
 }

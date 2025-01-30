@@ -31,7 +31,6 @@ export const getEndDateTimestamp = (currentTimeMs: number, period: number) => {
 };
 
 export const convertAssetOptions = (assets: IAsset[]) => {
-  console.log('assets: ', assets);
   return assets?.map((a: IAsset) => {
     return { label: a?.name, value: a?.id };
   });

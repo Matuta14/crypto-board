@@ -9,21 +9,23 @@ export const CryptoTableColumns: IColumn<IAsset>[] = [
   },
 
   {
-    value: 'id',
+    value: 'symbol',
     label: 'Ticker',
-    right: true,
+    align: 'right',
   },
 
   {
     value: 'priceUsd',
     label: 'Price In USD',
-    right: true,
+    align: 'right',
+    tooltip: true,
   },
 
   {
     value: 'changePercent24Hr',
     label: 'Change',
-    right: true,
+    align: 'right',
+    tooltip: true,
     customRender: true,
   },
 ];

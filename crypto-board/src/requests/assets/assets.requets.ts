@@ -20,7 +20,7 @@ const getAssets = async (props: IAssetsRequest) => {
   const { data } = await axios.get<IAssetsResponse>(
     `${endpoints.assets.assets}${props ? '?' : ''}${
       props.limit ? `limit=${props.limit}` : ''
-    }`,
+    }${props.ids ? `&ids=${props.ids}` : ''}`,
     { headers: AllowOriginHeader }
   );
   return data;
@@ -46,7 +46,7 @@ export const useAssets = (props: IAssetsRequest) => {
     onSuccess: (data) => {
       dispatch(setAssetsData(data.data));
     },
-    refetchInterval: 60000,
+    refetchInterval: 6000,
   });
 };
 

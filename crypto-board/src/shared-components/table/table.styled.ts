@@ -30,11 +30,24 @@ export const TableBody = styled.div`
   flex-direction: column;
 `;
 
-export const TableCell = styled.td<{ flex?: number; right?: boolean }>`
+export const TableCell = styled.td<{ flex?: number; align?: string }>`
   padding: 10px;
   width: 100px;
   flex: ${({ flex }) => (flex ? flex : 'auto')};
-  text-align: ${({ right }) => (right ? 'right' : 'left')};
   color: ${Theme.colors.MAIN_FONT_COLOR};
-  font-size: 22px;
+  font-size: 18px;
+  text-align: ${({ align }) => align};
+  &:first-child {
+    color: ${Theme.colors.MAIN_BLUE};
+  }
+  &.header-cell {
+    color: ${Theme.colors.SECONDARY_FONT_COLOR};
+  }
+  .hide-overflow {
+    text-overflow: ellipsis;
+    text-align: ${({ align }) => align};
+    overflow: hidden;
+    width: 100%;
+    display: block;
+  }
 `;

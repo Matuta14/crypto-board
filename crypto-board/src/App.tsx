@@ -3,6 +3,8 @@ import routesMap from './routes';
 import { Header } from './shared-components/header/header';
 import { ContentLayoutStyled, MainLayoutStyled } from './layout/layout.styled';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 const cache = new QueryCache();
 export const queryClient = new QueryClient({
@@ -12,26 +14,28 @@ export const queryClient = new QueryClient({
 function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <Routes>
-            {routesMap.map(({ path, Component }, i) => (
-              <Route
-                key={i}
-                path={path}
-                element={
-                  <MainLayoutStyled>
-                    <Header />
-                    <ContentLayoutStyled>
-                      <Component />
-                    </ContentLayoutStyled>
-                  </MainLayoutStyled>
-                }
-              />
-            ))}
-          </Routes>
-        </Router>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <Routes>
+              {routesMap.map(({ path, Component }, i) => (
+                <Route
+                  key={i}
+                  path={path}
+                  element={
+                    <MainLayoutStyled>
+                      <Header />
+                      <ContentLayoutStyled>
+                        <Component />
+                      </ContentLayoutStyled>
+                    </MainLayoutStyled>
+                  }
+                />
+              ))}
+            </Routes>
+          </Router>
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 }

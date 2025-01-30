@@ -1,3 +1,4 @@
+import { Tooltip } from '../tooltip/tooltip';
 import {
   TableBody,
   TableCell,
@@ -17,9 +18,9 @@ export const Table = function <T>({
   return (
     <TableStyled>
       <TableHeader>
-        {columns.map(({ label, flex, right }) => {
+        {columns.map(({ label, flex, align }) => {
           return (
-            <TableCell flex={flex} right={right}>
+            <TableCell className='header-cell' flex={flex} align={align}>
               {label}
             </TableCell>
           );
@@ -34,13 +35,20 @@ export const Table = function <T>({
                 if (onRowClick) return onRowClick(r[rowSelector]);
               }}
             >
-              {columns.map(({ value, flex, right, customRender }) => {
+              {columns.map(({ value, flex, align, customRender, tooltip }) => {
                 if (customRender && customCellRender) {
                   return customCellRender(r[value]);
                 }
                 return (
-                  <TableCell flex={flex} right={right}>
-                    {r[value]}
+                  <TableCell flex={flex} align={align}>
+                    <Tooltip
+                      align={align || 'left'}
+                      tooltipText={tooltip ? `${r[value]}` : ''}
+                    >
+                      <span className='hide-overflow'>
+                        {r[value] as React.ReactNode}
+                      </span>
+                    </Tooltip>
                   </TableCell>
                 );
               })}

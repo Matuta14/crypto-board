@@ -11,6 +11,8 @@ export const PercentTabeCell = styled.td<{ direction?: AssetDirectionType }>`
   align-items: center;
   gap: 10px;
   color: ${Theme.colors.GREEN};
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${({ direction }) =>
     direction === AssetDirectionType.DOWN &&

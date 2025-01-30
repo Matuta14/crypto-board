@@ -15,6 +15,7 @@ export const Theme = {
     ORANGE_GRADIENT_BG: 'linear-gradient(#FCD5A0, #FCA44C)',
     BORDER_RADIUS: '8px',
     BORDER: `2px solid #131922`,
+    BORDER_COLORED: '1px solid #3d9496',
     CARD_DEFAULT_SIZE: '510px',
   },
 };
