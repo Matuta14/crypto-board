@@ -1,7 +1,7 @@
 export const Theme = {
   colors: {
     MAIN_BG: '#1f242b',
-    MAIN_FONT_COLOR: '#d1d9e2',
+    MAIN_FONT_COLOR: '#D1D9E2',
     CARD_BG: '#171d26',
     RED: '#F42F5C',
     GREEN: '#0ecb81',

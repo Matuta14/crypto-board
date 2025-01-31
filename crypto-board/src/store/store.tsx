@@ -4,29 +4,27 @@ import { persistStore, persistReducer } from 'redux-persist';
 import assetsReducer from './assets/slice';
 import websocketReducer from './websocket/slice';
 
-// Configuration for persisting Redux state
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['assets'], // Persist only the assets slice
+  whitelist: ['assets'],
 };
 
-// Combine reducers
 const rootReducer = combineReducers({
-  websocket: websocketReducer, // This will not be persisted
-  assets: assetsReducer, // This will be persisted
+  websocket: websocketReducer,
+  assets: assetsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  // TODO: See why do we need it
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Prevent warnings related to non-serializable values
+      serializableCheck: false,
     }),
 });
 
 export const persistor = persistStore(store);
+
 export default store;

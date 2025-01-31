@@ -7,15 +7,23 @@ export const TradePageStyled = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  .title {
+  form {
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  .arrow-icon {
-    transform: rotate(180deg);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin: 20px;
+      color: ${Theme.colors.MAIN_FONT_COLOR};
+    }
+    .arrow-icon {
+      transform: rotate(180deg);
+    }
   }
 `;
 
@@ -25,4 +33,10 @@ export const InputWithSelect = styled.div`
   border: ${Theme.effects.BORDER_COLORED};
   padding: 20px;
   border-radius: ${Theme.effects.BORDER_RADIUS};
+`;
+
+export const ErrorText = styled.span`
+display: flex;
+color: ${Theme.colors.RED}
+padding: 0 20px;
 `;

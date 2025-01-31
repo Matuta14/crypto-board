@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const TooltipStyled = styled.div<{ align: string }>`
+export const TooltipStyled = styled.div<{ $align: string }>`
   width: 100%;
   text-align: center;
   position: relative;
-  text-align: ${({ align }) => align || 'left'};
+  text-align: ${({ $align }) => $align || 'left'};
   .tooltip-text {
     position: absolute;
     bottom: 100%;

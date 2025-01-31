@@ -10,7 +10,8 @@ export const TableStyled = styled.div`
 export const TableHeader = styled.div`
   display: flex;
   width: 100%;
-  td {
+  background-color: ${Theme.colors.TABLE_ROW_HOVER};
+  span {
     color: ${Theme.colors.SECONDARY_FONT_COLOR};
     font-size: 20px;
   }
@@ -19,7 +20,7 @@ export const TableHeader = styled.div`
 export const TableRow = styled.div`
   display: flex;
   cursor: pointer;
-  border-radius: ${Theme.effects.BORDER_RADIUS};
+  border-bottom: 1px solid ${Theme.colors.MAIN_BLUE};
   &:hover {
     background-color: ${Theme.colors.TABLE_ROW_HOVER};
   }
@@ -30,13 +31,13 @@ export const TableBody = styled.div`
   flex-direction: column;
 `;
 
-export const TableCell = styled.td<{ flex?: number; align?: string }>`
+export const TableCell = styled.span<{ $flex?: number; $align?: string }>`
   padding: 10px;
   width: 100px;
-  flex: ${({ flex }) => (flex ? flex : 'auto')};
+  flex: ${({ $flex }) => ($flex ? $flex : 'auto')};
   color: ${Theme.colors.MAIN_FONT_COLOR};
   font-size: 18px;
-  text-align: ${({ align }) => align};
+  text-align: ${({ $align }) => $align};
   &:first-child {
     color: ${Theme.colors.MAIN_BLUE};
   }
@@ -45,7 +46,7 @@ export const TableCell = styled.td<{ flex?: number; align?: string }>`
   }
   .hide-overflow {
     text-overflow: ellipsis;
-    text-align: ${({ align }) => align};
+    text-align: ${({ $align }) => $align};
     overflow: hidden;
     width: 100%;
     display: block;

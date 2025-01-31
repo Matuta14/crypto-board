@@ -1,19 +1,19 @@
-import { useDispatch } from 'react-redux';
-import { useAssets } from '../../requests/assets/assets.requets';
+import { useAssets } from '../../api/assets/assets.requets';
 import { Table } from '../../shared-components/table/table';
-import { PercentTableCell } from './components/percentTableCell';
+import { CustomCellRender } from './components/customTableCell';
 import { CryptoTableColumns } from './constants';
 import { FilterBox, MainPageStyled, TableBox } from './mainPage.styled';
-import { setCoin } from '../../store/assets/slice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../shared-components/loader/loader';
 import { Input } from '../../shared-components/input/input';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import useViewport from '../../hooks/useViewport';
+import { MobileAssetTable } from './components/mobileAssetTable';
 
 export const MainPage = () => {
-  const [searchValue, setSearchValue] = useState('');
   const { data, isLoading } = useAssets({ limit: 10 });
-  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState('');
+  const { isMobile } = useViewport();
   const navigate = useNavigate();
 
   const filteredData =
@@ -29,7 +29,6 @@ export const MainPage = () => {
   };
 
   const onRowClick = (coin: string) => {
-    dispatch(setCoin(coin));
     navigate('/chart');
     localStorage.setItem('selectedCoin', coin);
   };
@@ -48,13 +47,22 @@ export const MainPage = () => {
               placeholder='Search Coin'
             />
           </FilterBox>
-          <Table
-            columns={CryptoTableColumns}
-            data={filteredData || []}
-            customCellRender={PercentTableCell}
-            rowSelector={'id'}
-            onRowClick={onRowClick}
-          />
+
+          {isMobile ? (
+            <MobileAssetTable
+              columns={CryptoTableColumns}
+              data={filteredData}
+              onRowClick={onRowClick}
+            />
+          ) : (
+            <Table
+              columns={CryptoTableColumns}
+              data={filteredData || []}
+              customCellRender={CustomCellRender}
+              rowSelector={'id'}
+              onRowClick={onRowClick}
+            />
+          )}
         </TableBox>
       )}
     </MainPageStyled>

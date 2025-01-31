@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Select } from '../../shared-components/select/select';
 import { InputWithSelect, TradePageStyled } from './tradePage.styled';
-import { selectAssets } from '../../store/assets/selector';
+import { selectAssets, selectPrices } from '../../store/assets/selector';
 import { convertAssetOptions } from '../../helpers/converters';
 import { useMemo, useState } from 'react';
 import { Input } from '../../shared-components/input/input';
 import ArrowIcon from '../../assets/icons/arrowIcon';
 import { Theme } from '../../theme';
+import { Button } from '../../shared-components/button/button';
 
 export const TradePage = () => {
   const assets = useSelector(selectAssets);
@@ -15,6 +16,8 @@ export const TradePage = () => {
   const [secondCoin, setSecondCoin] = useState(convertedData?.[1].value);
   const [firstValue, setFirstValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
+  const prices = useSelector(selectPrices);
+
   const onFirstCoinChange = (c: string) => {
     setFirstValue('');
     setSecondValue('');
@@ -33,13 +36,6 @@ export const TradePage = () => {
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFirstValue(value);
-    const enteredValue = Number(value);
-
-    const valueInUsd = enteredValue * Number(firstAsset?.priceUsd);
-
-    const resultValue = valueInUsd / Number(secondAsset?.priceUsd);
-
-    setSecondValue(resultValue.toString());
   };
 
   const onConvertedInputChange = () => {};
@@ -50,32 +46,52 @@ export const TradePage = () => {
     setSecondCoin(c);
   };
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const valueInUsd =
+      Number(firstValue) * Number(prices?.[firstAsset?.id as any]);
+    const resultValue = valueInUsd / Number(prices?.[secondAsset?.id as any]);
+    setSecondValue(resultValue.toString());
+  };
+
   return (
     <TradePageStyled>
       <div className='title'>Trade Coins</div>
-      <InputWithSelect>
-        <Select
-          options={convertedData}
-          onChange={onFirstCoinChange}
-          label=''
-          value={firstCoin}
-        />
-        <Input onChange={onInputChange} value={firstValue} type='number' />
-      </InputWithSelect>
-      <ArrowIcon fill={Theme.colors.MAIN_BLUE} className='arrow-icon' />
-      <InputWithSelect>
-        <Select
-          options={convertedData}
-          onChange={onSecondCoinChange}
-          value={secondCoin}
-          label=''
-        />
-        <Input
-          onChange={onConvertedInputChange}
-          value={secondValue}
-          type='number'
-        />
-      </InputWithSelect>
+      <form onSubmit={handleSubmit}>
+        <InputWithSelect>
+          <Select
+            options={convertedData}
+            onChange={onFirstCoinChange}
+            label=''
+            value={firstCoin}
+          />
+          <Input
+            onChange={onInputChange}
+            value={firstValue}
+            type='number'
+            placeholder='Enter Amount'
+            required
+            min={0}
+          />
+        </InputWithSelect>
+        <ArrowIcon fill={Theme.colors.MAIN_BLUE} className='arrow-icon' />
+        <InputWithSelect>
+          <Select
+            options={convertedData}
+            onChange={onSecondCoinChange}
+            value={secondCoin}
+            label=''
+          />
+          <Input
+            onChange={onConvertedInputChange}
+            value={secondValue}
+            type='number'
+          />
+        </InputWithSelect>
+
+        <Button text={'submit'} type='submit' />
+      </form>
     </TradePageStyled>
   );
 };
+//TODO: change the start script

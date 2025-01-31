@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { responsive } from '../../layout/sizeConstants';
 
 export const ChartPageStyled = styled.div`
   display: flex;
@@ -12,6 +13,10 @@ export const ChartPageStyled = styled.div`
     .select {
       margin-bottom: 30px;
     }
+  }
+
+  @media ${responsive.mobile} {
+    padding: 30px;
   }
 `;
 export const ChartBox = styled.div`

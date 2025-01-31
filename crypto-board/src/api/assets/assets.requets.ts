@@ -6,33 +6,25 @@ import {
   IAssetsResponse,
 } from './types';
 import axios from 'axios';
-import { endpoints } from '../../api/endpoints';
+import { createEndpoint, SERVICES } from '../endpoints';
 import { useDispatch } from 'react-redux';
-import { setAssetsData } from '../../store/assets/slice';
-const AllowOriginHeader = {
-  'Access-Control-Allow-Origin': '*',
-};
+import { setAssetsData, setPrices } from '../../store/assets/slice';
+import { convertDataToPriceMap } from '../../helpers/converters';
 
-// TODO: change the getFunction to better one
-
-// TODO: add other props to request
 const getAssets = async (props: IAssetsRequest) => {
   const { data } = await axios.get<IAssetsResponse>(
-    `${endpoints.assets.assets}${props ? '?' : ''}${
+    `${createEndpoint(SERVICES.assets)}${props ? '?' : ''}${
       props.limit ? `limit=${props.limit}` : ''
-    }${props.ids ? `&ids=${props.ids}` : ''}`,
-    { headers: AllowOriginHeader }
+    }${props.ids ? `&ids=${props.ids}` : ''}`
   );
   return data;
 };
 
-// TODO: add other props to request
 const getAssetHistory = async (props: IAssetHistoryRequest) => {
   const { data } = await axios.get<IAssetHistoryResponse>(
-    `${endpoints.assets.assets}/${props.id}/history?interval=${props.interval}${
-      props.start ? `&start=${props.start}&end=${props.end}` : ''
-    }`,
-    { headers: AllowOriginHeader }
+    `${createEndpoint(SERVICES.assets)}/${props.id}/history?interval=${
+      props.interval
+    }${props.start ? `&start=${props.start}&end=${props.end}` : ''}`
   );
   return data;
 };
@@ -45,8 +37,9 @@ export const useAssets = (props: IAssetsRequest) => {
     queryFn: () => getAssets(props),
     onSuccess: (data) => {
       dispatch(setAssetsData(data.data));
+      dispatch(setPrices(convertDataToPriceMap(data.data)));
     },
-    refetchInterval: 6000,
+    refetchInterval: 60000,
   });
 };
 
@@ -54,5 +47,6 @@ export const useAssetHistory = (props: IAssetHistoryRequest) => {
   return useQuery<IAssetHistoryResponse>({
     queryKey: ['asset', props],
     queryFn: () => getAssetHistory(props),
+    refetchInterval: 60000,
   });
 };

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { AssetDirectionType } from '../types';
 import { Theme } from '../../../theme';
 
-export const PercentTabeCell = styled.td<{ direction?: AssetDirectionType }>`
+export const PercentTabeCell = styled.span<{ direction?: AssetDirectionType }>`
   padding: 10px;
   width: 100px;
   display: flex;

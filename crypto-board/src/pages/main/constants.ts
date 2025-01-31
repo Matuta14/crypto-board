@@ -1,4 +1,4 @@
-import { IAsset } from '../../requests/assets/types';
+import { IAsset } from '../../api/assets/types';
 import { IColumn } from '../../shared-components/table/types';
 
 export const CryptoTableColumns: IColumn<IAsset>[] = [
@@ -19,6 +19,7 @@ export const CryptoTableColumns: IColumn<IAsset>[] = [
     label: 'Price In USD',
     align: 'right',
     tooltip: true,
+    customRender: true,
   },
 
   {

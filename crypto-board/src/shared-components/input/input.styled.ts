@@ -5,7 +5,7 @@ export const InputStyled = styled.input`
   display: flex;
   background-color: transparent;
   border: none;
-  padding: 20px;
+  padding: 20px 5px;
   color: ${Theme.colors.MAIN_FONT_COLOR};
   border-bottom: 1px solid ${Theme.colors.MAIN_BLUE};
   &:focus-visible {
@@ -16,5 +16,9 @@ export const InputStyled = styled.input`
   &[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+
+  &::placeholder {
+    color: ${Theme.colors.MAIN_BLUE};
   }
 `;

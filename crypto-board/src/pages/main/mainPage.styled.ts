@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Theme } from '../../theme';
 
 export const MainPageStyled = styled.div`
   display: flex;

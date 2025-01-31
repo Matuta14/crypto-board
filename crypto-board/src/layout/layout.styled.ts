@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Theme } from '../theme';
+import { responsive } from './sizeConstants';
 
 export const MainLayoutStyled = styled.div`
   display: flex;
@@ -17,4 +18,8 @@ export const ContentLayoutStyled = styled.div`
   padding: 30px;
   height: 100%;
   border-radius: ${Theme.effects.BORDER_RADIUS};
+
+  @media ${responsive.mobile} {
+    padding: 0;
+  }
 `;

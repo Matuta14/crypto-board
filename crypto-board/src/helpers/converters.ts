@@ -1,10 +1,6 @@
-import {
-  IAsset,
-  IAssetHistoryResponse,
-  IHistoryAsset,
-} from '../requests/assets/types';
+import { IAsset, IHistoryAsset } from '../api/assets/types';
 
-export const ConvertChartData = ({ data }: IAssetHistoryResponse) => {
+export const ConvertChartData = (data: IHistoryAsset[]) => {
   const assetData: number[] = [];
   const timeData: string[] = [];
   data?.forEach((asset: IHistoryAsset) => {
@@ -15,7 +11,6 @@ export const ConvertChartData = ({ data }: IAssetHistoryResponse) => {
   return { assetData: assetData, timeData: timeData };
 };
 
-//TODO: check this function
 export const convertTimestampToDate = (timestamp: number) => {
   const date = new Date(timestamp);
   const day = String(date.getDate()).padStart(2, '0');
@@ -36,6 +31,11 @@ export const convertAssetOptions = (assets: IAsset[]) => {
   });
 };
 
-interface IAssetProps {
-  assets: IAsset[];
+export function convertDataToPriceMap(data: IAsset[]): {
+  [key: string]: string;
+} {
+  return data.reduce((acc, { id, priceUsd }) => {
+    acc[id] = String(priceUsd);
+    return acc;
+  }, {} as { [key: string]: string });
 }

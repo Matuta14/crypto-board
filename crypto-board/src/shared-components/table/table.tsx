@@ -18,9 +18,14 @@ export const Table = function <T>({
   return (
     <TableStyled>
       <TableHeader>
-        {columns.map(({ label, flex, align }) => {
+        {columns.map(({ label, flex, align }, index) => {
           return (
-            <TableCell className='header-cell' flex={flex} align={align}>
+            <TableCell
+              className='header-cell'
+              $flex={flex}
+              $align={align}
+              key={index}
+            >
               {label}
             </TableCell>
           );
@@ -28,30 +33,33 @@ export const Table = function <T>({
       </TableHeader>
 
       <TableBody>
-        {data.map((r) => {
+        {data.map((r, index) => {
           return (
             <TableRow
               onClick={() => {
                 if (onRowClick) return onRowClick(r[rowSelector]);
               }}
+              key={index}
             >
-              {columns.map(({ value, flex, align, customRender, tooltip }) => {
-                if (customRender && customCellRender) {
-                  return customCellRender(r[value]);
+              {columns.map(
+                ({ value, flex, align, customRender, tooltip }, index) => {
+                  if (customRender && customCellRender) {
+                    return customCellRender(r, value, index);
+                  }
+                  return (
+                    <TableCell $flex={flex} $align={align} key={index}>
+                      <Tooltip
+                        align={align || 'left'}
+                        tooltipText={tooltip ? `${r[value]}` : ''}
+                      >
+                        <span className='hide-overflow'>
+                          {r[value] as React.ReactNode}
+                        </span>
+                      </Tooltip>
+                    </TableCell>
+                  );
                 }
-                return (
-                  <TableCell flex={flex} align={align}>
-                    <Tooltip
-                      align={align || 'left'}
-                      tooltipText={tooltip ? `${r[value]}` : ''}
-                    >
-                      <span className='hide-overflow'>
-                        {r[value] as React.ReactNode}
-                      </span>
-                    </Tooltip>
-                  </TableCell>
-                );
-              })}
+              )}
             </TableRow>
           );
         })}

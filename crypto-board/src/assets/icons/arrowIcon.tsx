@@ -17,7 +17,7 @@ export const ArrowIcon = ({ fill, className }: IProp): ReactElement => (
 );
 interface IProp {
   fill: string;
-  className: string;
+  className?: string;
 }
 
 export default ArrowIcon;
