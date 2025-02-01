@@ -9,8 +9,8 @@ export const Header = () => {
         LOGO
       </Link>
       <div className='menu'>
-        <Link to={'/'}>MAIN</Link>
-        <Link to='/trade'>TRADE</Link>
+        <Link to={'/'}>Main</Link>
+        <Link to='/trade'>Trade</Link>
       </div>
     </HeaderStyled>
   );

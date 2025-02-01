@@ -1,8 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage'; // Uses localStorage for web
+import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import assetsReducer from './assets/slice';
-import websocketReducer from './websocket/slice';
 
 const persistConfig = {
   key: 'root',
@@ -11,7 +10,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  websocket: websocketReducer,
+  // websocket: websocketReducer, TODO: delete
   assets: assetsReducer,
 });
 

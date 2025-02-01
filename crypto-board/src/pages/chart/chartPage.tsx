@@ -18,7 +18,7 @@ export const ChartPage = () => {
 
   const endTime = useMemo(() => {
     const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth(), now.getUTCDate()); // Sets time to 00:00:00
+    return new Date(now.getFullYear(), now.getMonth(), now.getUTCDate());
   }, [period]);
 
   const startTime = getEndDateTimestamp(endTime.getTime(), period);

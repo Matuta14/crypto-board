@@ -22,6 +22,13 @@ export const convertTimestampToDate = (timestamp: number) => {
 
 export const getEndDateTimestamp = (currentTimeMs: number, period: number) => {
   const periodInMilliseconds = period * 24 * 60 * 60 * 1000; // Convert days to milliseconds
+
+  const now = new Date();
+  console.log('now: ', now);
+  console.log(
+    'ans in date: ',
+    convertTimestampToDate(currentTimeMs - periodInMilliseconds)
+  );
   return currentTimeMs - periodInMilliseconds;
 };
 
@@ -31,6 +38,7 @@ export const convertAssetOptions = (assets: IAsset[]) => {
   });
 };
 
+// TODO: Check reduce
 export function convertDataToPriceMap(data: IAsset[]): {
   [key: string]: string;
 } {

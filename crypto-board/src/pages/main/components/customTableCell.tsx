@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { IAsset } from '../../../api/assets/types';
 import { selectPrices } from '../../../store/assets/selector';
 import { Tooltip } from '../../../shared-components/tooltip/tooltip';
-import { useWebSocketContext } from '../../../context/websocketProvider';
+import { useWebSocketContext } from '../../../hooks/useWebsocketContext';
 
 export const CustomCellRender = (asset: IAsset, label: string, key: number) => {
   const { lastMessage } = useWebSocketContext();

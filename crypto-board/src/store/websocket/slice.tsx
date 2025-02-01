@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+// TODO: delete
 const websocketSlice = createSlice({
   name: 'websocket',
   initialState: {
