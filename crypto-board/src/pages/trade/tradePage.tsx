@@ -94,4 +94,3 @@ export const TradePage = () => {
     </TradePageStyled>
   );
 };
-//TODO: change the start script

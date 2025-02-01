@@ -38,7 +38,6 @@ export const convertAssetOptions = (assets: IAsset[]) => {
   });
 };
 
-// TODO: Check reduce
 export function convertDataToPriceMap(data: IAsset[]): {
   [key: string]: string;
 } {

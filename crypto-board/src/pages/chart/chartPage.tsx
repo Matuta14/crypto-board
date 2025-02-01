@@ -13,7 +13,7 @@ import Loader from '../../shared-components/loader/loader';
 
 export const ChartPage = () => {
   const selectedCoin = localStorage.getItem('selectedCoin') || '';
-  const [interval, setInterval] = useState<IntervalEnum>(IntervalEnum.oneHour);
+  const interval = IntervalEnum.oneHour;
   const [period, setPeriod] = useState<ChartPeriodType>(ChartPeriodType.oneDay);
 
   const endTime = useMemo(() => {
@@ -23,7 +23,6 @@ export const ChartPage = () => {
 
   const startTime = getEndDateTimestamp(endTime.getTime(), period);
 
-  // TODO: add erors EVERYWHERE
   const { data, isLoading } = useAssetHistory({
     id: selectedCoin,
     interval: interval,

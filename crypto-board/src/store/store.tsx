@@ -10,7 +10,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  // websocket: websocketReducer, TODO: delete
   assets: assetsReducer,
 });
 
