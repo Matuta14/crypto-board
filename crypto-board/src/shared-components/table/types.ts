@@ -1,7 +1,11 @@
 export interface TableProps<T> {
   columns: IColumn<T>[];
   data: T[];
-  customCellRender?: Function;
+  customCellRender?: React.ComponentType<{
+    asset: T;
+    label: string;
+    key: number;
+  }>;
   onRowClick?: Function;
   rowSelector: keyof T;
 }

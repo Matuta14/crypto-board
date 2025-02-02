@@ -5,6 +5,8 @@ export const MobileAssetTableStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  overflow: auto;
 `;
 
 export const MobileAssetBlock = styled.div`

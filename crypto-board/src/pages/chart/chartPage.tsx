@@ -1,7 +1,7 @@
 import { useAssetHistory } from '../../api/assets/assets.requets';
 import { ChartBox, ChartPageStyled } from './charPage.styled';
 import { CoinPriceChart } from './components/coinChart';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ChartPeriodType, IntervalEnum } from './types';
 import {
   ConvertChartData,
@@ -16,10 +16,8 @@ export const ChartPage = () => {
   const interval = IntervalEnum.oneHour;
   const [period, setPeriod] = useState<ChartPeriodType>(ChartPeriodType.oneDay);
 
-  const endTime = useMemo(() => {
-    const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth(), now.getUTCDate());
-  }, [period]);
+  const now = new Date();
+  const endTime = new Date(now.getFullYear(), now.getMonth(), now.getUTCDate());
 
   const startTime = getEndDateTimestamp(endTime.getTime(), period);
 

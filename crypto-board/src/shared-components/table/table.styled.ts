@@ -52,3 +52,12 @@ export const TableCell = styled.span<{ $flex?: number; $align?: string }>`
     display: block;
   }
 `;
+
+export const EmptyTableStyled = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-size: 22px;
+  text-align: center;
+  margin-top: 10%;
+`;

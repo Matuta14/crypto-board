@@ -26,11 +26,11 @@ export const TradePage = () => {
 
   const firstAsset = useMemo(
     () => assets?.find((a) => a.id === firstCoin),
-    [assets]
+    [assets, firstCoin]
   );
   const secondAsset = useMemo(
     () => assets?.find((a) => a.id === secondCoin),
-    [assets]
+    [assets, secondCoin]
   );
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

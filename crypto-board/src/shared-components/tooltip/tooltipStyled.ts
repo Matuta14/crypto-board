@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { responsive } from '../../layout/sizeConstants';
 
 export const TooltipStyled = styled.div<{ $align: string }>`
   width: 100%;
@@ -21,5 +22,10 @@ export const TooltipStyled = styled.div<{ $align: string }>`
   &:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
+  }
+
+  @media ${responsive.mobile} {
+    display: flex;
+    justify-content: end;
   }
 `;

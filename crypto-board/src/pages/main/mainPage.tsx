@@ -6,7 +6,7 @@ import { FilterBox, MainPageStyled, TableBox } from './mainPage.styled';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../shared-components/loader/loader';
 import { Input } from '../../shared-components/input/input';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import useViewport from '../../hooks/useViewport';
 import { MobileAssetTable } from './components/mobileAssetTable';
 
@@ -16,13 +16,16 @@ export const MainPage = () => {
   const { isMobile } = useViewport();
   const navigate = useNavigate();
 
-  const filteredData =
-    data?.data?.filter(
-      (asset) =>
-        asset.id.includes(searchValue) ||
-        asset.name.includes(searchValue) ||
-        asset.symbol.includes(searchValue)
-    ) || [];
+  const filteredData = useMemo(() => {
+    return (
+      data?.data?.filter(
+        (asset) =>
+          asset.id.includes(searchValue) ||
+          asset.name.includes(searchValue) ||
+          asset.symbol.includes(searchValue)
+      ) || []
+    );
+  }, [data?.data, searchValue]);
 
   const onSearchChange = (value: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(value.target.value);
@@ -53,6 +56,7 @@ export const MainPage = () => {
               columns={CryptoTableColumns}
               data={filteredData}
               onRowClick={onRowClick}
+              customCellRender={CustomCellRender}
             />
           ) : (
             <Table

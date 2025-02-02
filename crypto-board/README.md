@@ -64,6 +64,8 @@ This will start the **Vite** development server and provide a local URL to previ
 - ⌨️ **TypeScript** - Static typing
 - 📏 **ESLint** - Code linting
 - 💅 **styled-components** - CSS-in-JS styling
+- ⚡ **React.memo** - Optimization for functional components to prevent unnecessary re-renders
+- 🔄 **useMemo** - Optimizing expensive calculations to avoid recomputation on every render
 
 ---
 

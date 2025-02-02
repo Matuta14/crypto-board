@@ -1,4 +1,5 @@
 import { Tooltip } from '../tooltip/tooltip';
+import { EmptyTable } from './emptyTable';
 import {
   TableBody,
   TableCell,
@@ -31,39 +32,49 @@ export const Table = function <T>({
           );
         })}
       </TableHeader>
-
-      <TableBody>
-        {data.map((r, index) => {
-          return (
-            <TableRow
-              onClick={() => {
-                if (onRowClick) return onRowClick(r[rowSelector]);
-              }}
-              key={index}
-            >
-              {columns.map(
-                ({ value, flex, align, customRender, tooltip }, index) => {
-                  if (customRender && customCellRender) {
-                    return customCellRender(r, value, index);
+      {data?.length > 0 ? (
+        <TableBody>
+          {data.map((r, index) => {
+            return (
+              <TableRow
+                onClick={() => {
+                  if (onRowClick) return onRowClick(r[rowSelector]);
+                }}
+                key={index}
+              >
+                {columns.map(
+                  ({ value, flex, align, customRender, tooltip }, index) => {
+                    if (customRender && customCellRender) {
+                      const DynamicComponent = customCellRender;
+                      return (
+                        <DynamicComponent
+                          key={index}
+                          asset={r}
+                          label={String(value)}
+                        />
+                      );
+                    }
+                    return (
+                      <TableCell $flex={flex} $align={align} key={index}>
+                        <Tooltip
+                          align={align || 'left'}
+                          tooltipText={tooltip ? `${r[value]}` : ''}
+                        >
+                          <span className='hide-overflow'>
+                            {r[value] as React.ReactNode}
+                          </span>
+                        </Tooltip>
+                      </TableCell>
+                    );
                   }
-                  return (
-                    <TableCell $flex={flex} $align={align} key={index}>
-                      <Tooltip
-                        align={align || 'left'}
-                        tooltipText={tooltip ? `${r[value]}` : ''}
-                      >
-                        <span className='hide-overflow'>
-                          {r[value] as React.ReactNode}
-                        </span>
-                      </Tooltip>
-                    </TableCell>
-                  );
-                }
-              )}
-            </TableRow>
-          );
-        })}
-      </TableBody>
+                )}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      ) : (
+        <EmptyTable />
+      )}
     </TableStyled>
   );
 };

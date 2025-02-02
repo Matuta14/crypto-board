@@ -1,27 +1,36 @@
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { AssetDirectionType } from '../types';
 import { PercentTabeCell } from './customTableCell.styled';
 import ArrowIcon from '../../../assets/icons/arrowIcon';
 import { Theme } from '../../../theme';
 import { TableCell } from '../../../shared-components/table/table.styled';
-import { useSelector } from 'react-redux';
 import { IAsset } from '../../../api/assets/types';
 import { selectPrices } from '../../../store/assets/selector';
 import { Tooltip } from '../../../shared-components/tooltip/tooltip';
 import { useWebSocketContext } from '../../../hooks/useWebsocketContext';
+import useViewport from '../../../hooks/useViewport';
 
-export const CustomCellRender = (asset: IAsset, label: string, key: number) => {
+const CustomCellRenderComp = ({
+  asset,
+  label,
+}: {
+  asset: IAsset;
+  label: string;
+}) => {
   const { lastMessage } = useWebSocketContext();
   const prices = useSelector(selectPrices);
+  const { isMobile } = useViewport();
 
-  // If new price is sent by websocket, show the websocket data (updated in live),
-  // If not, show the fetched data that is updated in every minute
-  const getPriceValue = () => {
-    const wsPrice = JSON.parse(lastMessage.data)?.[asset.id as any];
-    if (lastMessage && wsPrice) {
-      return wsPrice;
+  const getPriceValue = useMemo(() => {
+    if (lastMessage) {
+      const wsPrice = JSON.parse(lastMessage?.data)?.[asset.id as any];
+      if (wsPrice) {
+        return wsPrice;
+      }
     }
     return prices?.[asset.id as any];
-  };
+  }, [lastMessage, prices, asset.id]);
 
   if (label === 'changePercent24Hr') {
     return (
@@ -31,29 +40,44 @@ export const CustomCellRender = (asset: IAsset, label: string, key: number) => {
             ? AssetDirectionType.UP
             : AssetDirectionType.DOWN
         }
-        key={key}
       >
-        <ArrowIcon
-          className='arrow'
-          fill={
-            Number(asset.changePercent24Hr) > 0
-              ? Theme.colors.GREEN
-              : Theme.colors.RED
-          }
-        />{' '}
+        {!isMobile && (
+          <ArrowIcon
+            className='arrow'
+            fill={
+              Number(asset.changePercent24Hr) > 0
+                ? Theme.colors.GREEN
+                : Theme.colors.RED
+            }
+          />
+        )}
         {asset.changePercent24Hr}
+        {isMobile && (
+          <ArrowIcon
+            className='arrow'
+            fill={
+              Number(asset.changePercent24Hr) > 0
+                ? Theme.colors.GREEN
+                : Theme.colors.RED
+            }
+          />
+        )}
       </PercentTabeCell>
     );
   }
   if (label === 'priceUsd') {
     return (
-      <TableCell $align='right' key={key}>
+      <TableCell $align='right'>
         {lastMessage && (
-          <Tooltip align={'right'} tooltipText={getPriceValue()}>
-            <span className='hide-overflow'>{getPriceValue()}</span>
+          <Tooltip align={'right'} tooltipText={getPriceValue}>
+            <span className='hide-overflow'>{getPriceValue}</span>
           </Tooltip>
         )}
       </TableCell>
     );
   }
+
+  return null;
 };
+
+export const CustomCellRender = React.memo(CustomCellRenderComp);

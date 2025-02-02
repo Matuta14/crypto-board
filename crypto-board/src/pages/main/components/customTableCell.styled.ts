@@ -13,6 +13,8 @@ export const PercentTabeCell = styled.span<{ direction?: AssetDirectionType }>`
   color: ${Theme.colors.GREEN};
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-all;
+  text-align: right;
 
   ${({ direction }) =>
     direction === AssetDirectionType.DOWN &&

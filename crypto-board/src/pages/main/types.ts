@@ -16,4 +16,9 @@ export interface IMobileTableProps {
   columns: IColumn<IAsset>[];
   data: IAsset[];
   onRowClick: Function;
+  customCellRender?: React.ComponentType<{
+    asset: IAsset;
+    label: string;
+    key: number;
+  }>;
 }
