@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoaderBox } from './loader.styled';
 
 const Loader = () => {

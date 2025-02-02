@@ -2,13 +2,13 @@ import { useAssetHistory } from '../../api/assets/assets.requets';
 import { ChartBox, ChartPageStyled } from './charPage.styled';
 import { CoinPriceChart } from './components/coinChart';
 import { useMemo, useState } from 'react';
-import { IntervalEnum } from './types';
+import { ChartPeriodType, IntervalEnum } from './types';
 import {
   ConvertChartData,
   getEndDateTimestamp,
 } from '../../helpers/converters';
 import { Select } from '../../shared-components/select/select';
-import { ChartIntervalOptions, ChartPeriodType } from './constants';
+import { ChartIntervalOptions } from './constants';
 import Loader from '../../shared-components/loader/loader';
 
 export const ChartPage = () => {

@@ -12,9 +12,3 @@ export const ChartIntervalOptions = [
     value: 30,
   },
 ];
-
-export enum ChartPeriodType {
-  oneDay = 1,
-  sevenDays = 7,
-  thirtyDays = 30,
-}

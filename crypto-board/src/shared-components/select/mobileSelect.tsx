@@ -4,6 +4,7 @@ import { ISelectProps } from './types';
 export const MobileSelect = ({ options, label, onChange }: ISelectProps) => {
   return (
     <MobileSelectStyled>
+      {label && <span className='title'>{label}</span>}
       {options.map((o) => (
         <div
           className='row'

@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export interface TableProps<T> {
   columns: IColumn<T>[];
   data: T[];

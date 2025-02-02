@@ -9,3 +9,8 @@ export enum IntervalEnum {
   twelveHours = 'h12',
   oneDay = 'd1',
 }
+export enum ChartPeriodType {
+  oneDay = 1,
+  sevenDays = 7,
+  thirtyDays = 30,
+}
